@@ -37,40 +37,7 @@ namespace RefactorShapes
             Console.WriteLine(shapeFacade.Calcular());
             Console.ReadKey();
         }
-        public static string Calcular(List<IShape> Lshapes)
-        {
-            string sRet = "";
-            List<string> LshapesName = new List<string>();
 
-            if (Lshapes.Count > 0)
-            {
-                for (int i = 0; i < Lshapes.Count; i++)
-                {
-                    if (i == 0)
-                    {
-                        LshapesName.Add(Lshapes[i].GetName());
-                    }
-                    else
-                    {
-                        bool bExists = true;
-                        foreach (string shapename in LshapesName)
-                        {
-                            if (shapename == Lshapes[i].GetName())
-                                bExists = false;
-                        }
-                        if (bExists)
-                            LshapesName.Add(Lshapes[i].GetName());
-                    }
-                }
-            }
-            else
-            {
-                sRet = "Empty list of shapes!";
-            }
-
-
-            return sRet;
-        }
         public static String Print(List<IShape> shapes)
         {
             String returnString = "";

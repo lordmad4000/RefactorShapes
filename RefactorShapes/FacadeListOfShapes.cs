@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RefactorShapes
 {
-    public class ShapeFacade
+    public class FacadeListOfShapes
     {
         private List<IShape> Lshapes;
         private List<string> LshapesName = new List<string>();
@@ -13,7 +13,7 @@ namespace RefactorShapes
         private List<double> LshapesArea = new List<double>();
         private List<double> LshapesPerimeter = new List<double>();
         private List<int> LshapesOrder = new List<int>();
-        public ShapeFacade(List<IShape> Lshapes)
+        public FacadeListOfShapes(List<IShape> Lshapes)
         {
             this.Lshapes = Lshapes;
         }

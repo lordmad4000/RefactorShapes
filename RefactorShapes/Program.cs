@@ -33,7 +33,7 @@ namespace RefactorShapes
             Console.WriteLine("******** Original ********");
             Console.WriteLine(Print(shapes));
             Console.WriteLine("******** Refactorizado ********");
-            ShapeFacade shapeFacade = new ShapeFacade(shapes);
+            FacadeListOfShapes shapeFacade = new FacadeListOfShapes(shapes);            
             Console.WriteLine(shapeFacade.Calcular());
             Console.ReadKey();
         }

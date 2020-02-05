@@ -48,7 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Circle.cs" />
+    <Compile Include="FacadeGroupOfShapes.cs" />
     <Compile Include="FacadeListOfShapes.cs" />
+    <Compile Include="GroupOfShapes.cs" />
+    <Compile Include="IGroupOfShapes.cs" />
     <Compile Include="IShape.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

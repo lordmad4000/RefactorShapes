@@ -30,11 +30,32 @@ namespace RefactorShapes
             shapes.Add(new Circle(8));
             shapes.Add(new Triangle(20));
 
-            Console.WriteLine("******** Original ********");
-            Console.WriteLine(Print(shapes));
-            Console.WriteLine("******** Refactorizado ********");
+            Console.WriteLine("************ Original ***********");
+            Console.WriteLine(Print(shapes) + "\n");
+            Console.WriteLine("******** Refactorizado 1 ********");
             FacadeListOfShapes shapeFacade = new FacadeListOfShapes(shapes);            
             Console.WriteLine(shapeFacade.Calcular());
+            Console.WriteLine("******** Refactorizado 2 ********");
+            FacadeGroupOfShapes facadeGroupOfShapes = new FacadeGroupOfShapes(new GroupOfShapes(new List<IShape>()));
+            facadeGroupOfShapes.AddShape(new Triangle(10));
+            facadeGroupOfShapes.AddShape(new Circle(20));
+            facadeGroupOfShapes.AddShape(new Square(20));
+            facadeGroupOfShapes.AddShape(new Circle(10));
+            facadeGroupOfShapes.AddShape(new Square(5));
+            facadeGroupOfShapes.AddShape(new Triangle(25));
+            facadeGroupOfShapes.AddShape(new Square(10));
+            facadeGroupOfShapes.AddShape(new Circle(30));
+            facadeGroupOfShapes.AddShape(new Square(30));
+            facadeGroupOfShapes.AddShape(new Triangle(30));
+            facadeGroupOfShapes.AddShape(new Circle(40));
+            facadeGroupOfShapes.AddShape(new Square(40));
+            facadeGroupOfShapes.AddShape(new Circle(5));
+            facadeGroupOfShapes.AddShape(new Triangle(5));
+            facadeGroupOfShapes.AddShape(new Circle(2));
+            facadeGroupOfShapes.AddShape(new Triangle(10));
+            facadeGroupOfShapes.AddShape(new Circle(8));
+            facadeGroupOfShapes.AddShape(new Triangle(20));
+            Console.WriteLine(facadeGroupOfShapes.GetTextToPrintOrderShapesDescending());
             Console.ReadKey();
         }
 

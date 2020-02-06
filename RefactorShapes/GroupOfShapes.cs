@@ -48,9 +48,9 @@ namespace RefactorShapes
         public List<int> GetNumberOfShapes()
         {
             List<int> LshapesNumber = new List<int>();
-            List<string> LshapesName = GetNameOfShapes();
             if (Lshapes.Count > 0)
             {
+                List<string> LshapesName = GetNameOfShapes();
                 for (int iShapeName = 0; iShapeName < LshapesName.Count; iShapeName++)
                 {
                     LshapesNumber.Add(0);
@@ -68,9 +68,9 @@ namespace RefactorShapes
         public List<double> GetAreaOfShapes()
         {
             List<double> LshapesArea = new List<double>();
-            List<string> LshapesName = GetNameOfShapes();
             if (Lshapes.Count > 0)
             {
+                List<string> LshapesName = GetNameOfShapes();
                 for (int iShapeName = 0; iShapeName < LshapesName.Count; iShapeName++)
                 {
                     LshapesArea.Add(0);
@@ -88,9 +88,9 @@ namespace RefactorShapes
         public List<double> GetPerimeterOfShapes()
         {
             List<double> LshapesPerimeter = new List<double>();
-            List<string> LshapesName = GetNameOfShapes();
             if (Lshapes.Count > 0)
             {
+                List<string> LshapesName = GetNameOfShapes();
                 for (int iShapeName = 0; iShapeName < LshapesName.Count; iShapeName++)
                 {
                     LshapesPerimeter.Add(0);
@@ -108,28 +108,31 @@ namespace RefactorShapes
         public List<int> GetOrderShapesDescending()
         {
             List<int> LshapesOrder = new List<int>();
-            List<int> LshapesNumber = GetNumberOfShapes();
-            int[] sortedList = LshapesNumber.ToArray().OrderByDescending(i => i).ToArray();
-
-            for (int iShapeOrder = 0; iShapeOrder < LshapesNumber.Count; iShapeOrder++)
+            if (Lshapes.Count > 0)
             {
-                for (int iShapeNumber = 0; iShapeNumber < LshapesNumber.Count; iShapeNumber++)
-                {
-                    if (LshapesNumber[iShapeNumber] == sortedList[iShapeOrder])
-                    {
-                        bool bExists = false;
-                        for (int iShapeOrder1 = 0; iShapeOrder1 < LshapesOrder.Count; iShapeOrder1++)
-                        {
-                            if (LshapesOrder[iShapeOrder1] == iShapeNumber)
-                            {
-                                bExists = true;
-                            }
-                        }
-                        if (!bExists)
-                        {
-                            LshapesOrder.Add(iShapeNumber);
+                List<int> LshapesNumber = GetNumberOfShapes();
+                int[] sortedList = LshapesNumber.ToArray().OrderByDescending(i => i).ToArray();
 
-                            //LshapesOrder[iShapeOrder] = iShapeNumber;
+                for (int iShapeOrder = 0; iShapeOrder < LshapesNumber.Count; iShapeOrder++)
+                {
+                    for (int iShapeNumber = 0; iShapeNumber < LshapesNumber.Count; iShapeNumber++)
+                    {
+                        if (LshapesNumber[iShapeNumber] == sortedList[iShapeOrder])
+                        {
+                            bool bExists = false;
+                            for (int iShapeOrder1 = 0; iShapeOrder1 < LshapesOrder.Count; iShapeOrder1++)
+                            {
+                                if (LshapesOrder[iShapeOrder1] == iShapeNumber)
+                                {
+                                    bExists = true;
+                                }
+                            }
+                            if (!bExists)
+                            {
+                                LshapesOrder.Add(iShapeNumber);
+
+                                //LshapesOrder[iShapeOrder] = iShapeNumber;
+                            }
                         }
                     }
                 }

@@ -37,9 +37,7 @@ namespace RefactorShapes
                                 bExists = false;
                         }
                         if (bExists)
-                        {
                             LshapesName.Add(Lshapes[i].GetName());
-                        }
                     }
                 }
             }
@@ -130,8 +128,6 @@ namespace RefactorShapes
                             if (!bExists)
                             {
                                 LshapesOrder.Add(iShapeNumber);
-
-                                //LshapesOrder[iShapeOrder] = iShapeNumber;
                             }
                         }
                     }

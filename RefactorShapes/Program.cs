@@ -8,57 +8,51 @@ namespace RefactorShapes
 {
     class Program
     {
+        public class Shapes            
+        {
+            public System.Collections.Generic.IEnumerable<IShape> NextShape
+            {
+                get
+                {
+                    yield return new Triangle(10);
+                    yield return new Circle(20);
+                    yield return new Square(20);
+                    yield return new Circle(10);
+                    yield return new Square(5);
+                    yield return new Triangle(25);
+                    yield return new Square(10);
+                    yield return new Circle(30);
+                    yield return new Square(30);
+                    yield return new Triangle(30);
+                    yield return new Circle(40);
+                    yield return new Square(40);
+                    yield return new Circle(5);
+                    yield return new Triangle(5);
+                    yield return new Circle(2);
+                    yield return new Triangle(10);
+                    yield return new Circle(8);
+                    yield return new Triangle(20);
+                }
+            }
+        }
         static void Main(string[] args)
         {
             List<IShape> shapes = new List<IShape>();
-            shapes.Add(new Triangle(10));
-            shapes.Add(new Circle(20));
-            shapes.Add(new Square(20));
-            shapes.Add(new Circle(10));
-            shapes.Add(new Square(5));
-            shapes.Add(new Triangle(25));
-            shapes.Add(new Square(10));
-            shapes.Add(new Circle(30));
-            shapes.Add(new Square(30));
-            shapes.Add(new Triangle(30));
-            shapes.Add(new Circle(40));
-            shapes.Add(new Square(40));
-            shapes.Add(new Circle(5));
-            shapes.Add(new Triangle(5));
-            shapes.Add(new Circle(2));
-            shapes.Add(new Triangle(10));
-            shapes.Add(new Circle(8));
-            shapes.Add(new Triangle(20));
-
+            FacadeGroupOfShapes facadeGroupOfShapes = new FacadeGroupOfShapes(new GroupOfShapes(new List<IShape>()));
+            foreach (IShape ishape in new Shapes().NextShape)
+            {
+                shapes.Add(ishape);
+                facadeGroupOfShapes.AddShape(ishape);
+            }
             Console.WriteLine("************ Original ***********");
             Console.WriteLine(Print(shapes) + "\n");
             Console.WriteLine("******** Refactorizado 1 ********");
             FacadeListOfShapes shapeFacade = new FacadeListOfShapes(shapes);            
             Console.WriteLine(shapeFacade.Calcular());
             Console.WriteLine("******** Refactorizado 2 ********");
-            FacadeGroupOfShapes facadeGroupOfShapes = new FacadeGroupOfShapes(new GroupOfShapes(new List<IShape>()));
-            facadeGroupOfShapes.AddShape(new Triangle(10));
-            facadeGroupOfShapes.AddShape(new Circle(20));
-            facadeGroupOfShapes.AddShape(new Square(20));
-            facadeGroupOfShapes.AddShape(new Circle(10));
-            facadeGroupOfShapes.AddShape(new Square(5));
-            facadeGroupOfShapes.AddShape(new Triangle(25));
-            facadeGroupOfShapes.AddShape(new Square(10));
-            facadeGroupOfShapes.AddShape(new Circle(30));
-            facadeGroupOfShapes.AddShape(new Square(30));
-            facadeGroupOfShapes.AddShape(new Triangle(30));
-            facadeGroupOfShapes.AddShape(new Circle(40));
-            facadeGroupOfShapes.AddShape(new Square(40));
-            facadeGroupOfShapes.AddShape(new Circle(5));
-            facadeGroupOfShapes.AddShape(new Triangle(5));
-            facadeGroupOfShapes.AddShape(new Circle(2));
-            facadeGroupOfShapes.AddShape(new Triangle(10));
-            facadeGroupOfShapes.AddShape(new Circle(8));
-            facadeGroupOfShapes.AddShape(new Triangle(20));
             Console.WriteLine(facadeGroupOfShapes.GetTextToPrintOrderShapesDescending());
             Console.ReadKey();
         }
-
         public static String Print(List<IShape> shapes)
         {
             String returnString = "";

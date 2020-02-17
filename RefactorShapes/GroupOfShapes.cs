@@ -8,22 +8,19 @@ namespace RefactorShapes
 {
     public class GroupOfShapes : IGroupOfShapes
     {
-        private List<IShape> Lshapes;
         private Dictionary<IShape, string> Dshapes;
         public GroupOfShapes(List<IShape> Lshapes)
         {
-            this.Lshapes = Lshapes;
             this.Dshapes = Lshapes.ToDictionary( x => x, x => x.GetName());
         }
         public void Add(IShape shape)
         {
-            Lshapes.Add(shape);
             Dshapes.Add(shape, shape.GetName());
         }
         public List<string> GetNameOfShapes()
         {
             List<string> LshapesName = new List<string>();
-            if (Lshapes.Count > 0)
+            if (Dshapes.Count > 0)
             {
                 LshapesName = Dshapes.Values.Distinct()
                                             .ToList<string>();                
@@ -33,7 +30,7 @@ namespace RefactorShapes
         public List<int> GetNumberOfShapes()
         {
             List<int> LshapesNumber = new List<int>();
-            if (Lshapes.Count > 0)
+            if (Dshapes.Count > 0)
             {
                 LshapesNumber = Dshapes.Values.GroupBy(x => x)
                                               .Select(y => new { Key = y.Key, Count = y.Count() })
@@ -45,7 +42,7 @@ namespace RefactorShapes
         public List<double> GetAreaOfShapes()
         {
             List<double> LshapesArea = new List<double>();
-            if (Lshapes.Count > 0)
+            if (Dshapes.Count > 0)
             {
 
                 LshapesArea = Dshapes.GroupBy(x => x.Value)
@@ -62,7 +59,7 @@ namespace RefactorShapes
         public List<double> GetPerimeterOfShapes()
         {
             List<double> LshapesPerimeter = new List<double>();
-            if (Lshapes.Count > 0)
+            if (Dshapes.Count > 0)
             {
                 LshapesPerimeter = Dshapes.GroupBy(x => x.Value)
                                 .Select(n => new
@@ -78,7 +75,7 @@ namespace RefactorShapes
         public List<int> GetOrderShapesDescending()
         {
             List<int> LshapesOrder = new List<int>();
-            if (Lshapes.Count > 0)
+            if (Dshapes.Count > 0)
             {
 
                 LshapesOrder = Dshapes.Values.GroupBy(x => x)

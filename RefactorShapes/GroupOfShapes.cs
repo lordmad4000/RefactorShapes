@@ -9,37 +9,24 @@ namespace RefactorShapes
     public class GroupOfShapes : IGroupOfShapes
     {
         private List<IShape> Lshapes;
+        private Dictionary<IShape, string> Dshapes;
         public GroupOfShapes(List<IShape> Lshapes)
         {
             this.Lshapes = Lshapes;
+            this.Dshapes = Lshapes.ToDictionary( x => x, x => x.GetName());
         }
         public void Add(IShape shape)
         {
             Lshapes.Add(shape);
+            Dshapes.Add(shape, shape.GetName());
         }
         public List<string> GetNameOfShapes()
         {
             List<string> LshapesName = new List<string>();
             if (Lshapes.Count > 0)
             {
-                for (int i = 0; i < Lshapes.Count; i++)
-                {
-                    if (i == 0)
-                    {
-                        LshapesName.Add(Lshapes[i].GetName());
-                    }
-                    else
-                    {
-                        bool bExists = true;
-                        foreach (string shapename in LshapesName)
-                        {
-                            if (shapename == Lshapes[i].GetName())
-                                bExists = false;
-                        }
-                        if (bExists)
-                            LshapesName.Add(Lshapes[i].GetName());
-                    }
-                }
+                LshapesName = Dshapes.Values.Distinct()
+                                            .ToList<string>();                
             }
             return LshapesName;
         }
@@ -48,18 +35,10 @@ namespace RefactorShapes
             List<int> LshapesNumber = new List<int>();
             if (Lshapes.Count > 0)
             {
-                List<string> LshapesName = GetNameOfShapes();
-                for (int iShapeName = 0; iShapeName < LshapesName.Count; iShapeName++)
-                {
-                    LshapesNumber.Add(0);
-                    for (int iShapes = 0; iShapes < Lshapes.Count; iShapes++)
-                    {
-                        if (LshapesName[iShapeName] == Lshapes[iShapes].GetName())
-                        {
-                            LshapesNumber[iShapeName]++;
-                        }
-                    }
-                }
+                LshapesNumber = Dshapes.Values.GroupBy(x => x)
+                                              .Select(y => new { Key = y.Key, Count = y.Count() })
+                                              .ToDictionary(x => x.Key, x => x.Count).Values
+                                              .ToList();
             }
             return LshapesNumber;
         }
@@ -68,18 +47,15 @@ namespace RefactorShapes
             List<double> LshapesArea = new List<double>();
             if (Lshapes.Count > 0)
             {
-                List<string> LshapesName = GetNameOfShapes();
-                for (int iShapeName = 0; iShapeName < LshapesName.Count; iShapeName++)
-                {
-                    LshapesArea.Add(0);
-                    for (int iShapes = 0; iShapes < Lshapes.Count; iShapes++)
-                    {
-                        if (LshapesName[iShapeName] == Lshapes[iShapes].GetName())
-                        {
-                            LshapesArea[iShapeName] += Lshapes[iShapes].GetArea();
-                        }
-                    }
-                }
+
+                LshapesArea = Dshapes.GroupBy(x => x.Value)
+                                .Select(n => new
+                                {
+                                    Key = n.Key,
+                                    Area = n.Sum(c => c.Key.GetArea()),
+                                })
+                                .ToDictionary(r => r.Key, r => r.Area).Values
+                                .ToList();
             }
             return LshapesArea;
         }
@@ -88,18 +64,14 @@ namespace RefactorShapes
             List<double> LshapesPerimeter = new List<double>();
             if (Lshapes.Count > 0)
             {
-                List<string> LshapesName = GetNameOfShapes();
-                for (int iShapeName = 0; iShapeName < LshapesName.Count; iShapeName++)
-                {
-                    LshapesPerimeter.Add(0);
-                    for (int iShapes = 0; iShapes < Lshapes.Count; iShapes++)
-                    {
-                        if (LshapesName[iShapeName] == Lshapes[iShapes].GetName())
-                        {
-                            LshapesPerimeter[iShapeName] += Lshapes[iShapes].GetPerimeter();
-                        }
-                    }
-                }
+                LshapesPerimeter = Dshapes.GroupBy(x => x.Value)
+                                .Select(n => new
+                                {
+                                    Key = n.Key,
+                                    Perimeter = n.Sum(c => c.Key.GetPerimeter()),
+                                })
+                                .ToDictionary(r => r.Key, r => r.Perimeter).Values
+                                .ToList();
             }
             return LshapesPerimeter;
         }
@@ -108,30 +80,11 @@ namespace RefactorShapes
             List<int> LshapesOrder = new List<int>();
             if (Lshapes.Count > 0)
             {
-                List<int> LshapesNumber = GetNumberOfShapes();
-                int[] sortedList = LshapesNumber.ToArray().OrderByDescending(i => i).ToArray();
 
-                for (int iShapeOrder = 0; iShapeOrder < LshapesNumber.Count; iShapeOrder++)
-                {
-                    for (int iShapeNumber = 0; iShapeNumber < LshapesNumber.Count; iShapeNumber++)
-                    {
-                        if (LshapesNumber[iShapeNumber] == sortedList[iShapeOrder])
-                        {
-                            bool bExists = false;
-                            for (int iShapeOrder1 = 0; iShapeOrder1 < LshapesOrder.Count; iShapeOrder1++)
-                            {
-                                if (LshapesOrder[iShapeOrder1] == iShapeNumber)
-                                {
-                                    bExists = true;
-                                }
-                            }
-                            if (!bExists)
-                            {
-                                LshapesOrder.Add(iShapeNumber);
-                            }
-                        }
-                    }
-                }
+                LshapesOrder = Dshapes.Values.GroupBy(x => x)
+                                             .Select((y, i) => new { Key = i, Count = y.Count() })
+                                             .OrderByDescending(c => c.Count).ToDictionary(r => r.Key, r => r.Count).Keys
+                                             .ToList();
             }
             return LshapesOrder;
         }

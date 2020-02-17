@@ -55,11 +55,14 @@ namespace RefactorShapes
         }
         public static String Print(List<IShape> shapes)
         {
+            // Siempre usa string en vez de String
             String returnString = "";
             String squareString = "";
             String circlesString = "";
             String trianglesString = "";
 
+            // JLM:  if (shapes.Count == 0) return "Empty list of shapes!";
+            // JLM: int numberSquares....
             if (shapes.Count == 0)
             {
                 returnString = "Empty list of shapes!";
@@ -81,6 +84,9 @@ namespace RefactorShapes
                 // Compute calculations
                 for (int i = 0; i < shapes.Count; i++)
                 {
+                    // JLM: No es SOLID, rompe el ppio Open Closed: Si mañana hay que meter Rectangle habría que
+                    // JLM: modificar este metodometiendo otro if.
+                    // JLM: La idea es tener una clase por cada Shape
                     if (shapes[i].GetType() == typeof(Square))
                     {
                         numberSquares++;
@@ -102,6 +108,8 @@ namespace RefactorShapes
                 }
 
                 // Get texts to print.
+                //JLM: Como te he puesto arriba, cada shape tiene sus dos clases: una para las propiedades con los datos
+                //JLM: Otra con la lógica (ej con un método CalculaTePErimeter() otro PrintResults()....algo así
                 if (numberSquares > 0)
                 {
                     squareString = "Squares: " + numberSquares + ", Area: " + areaSquares.ToString("#.##") + ", Perimeter: " + perimeterSquares.ToString("#.##") + ".";
